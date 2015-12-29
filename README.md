@@ -1,4 +1,4 @@
-Kazán vezérlő
+Kazán vezérlő - Verzió 15.12.28
 
 Fa törmelék táplálású kazán adagoló autómatika.
 
@@ -16,3 +16,5 @@ Jövőbeli elképzelések:
 - Tűz begyújtás üzemmód
 - Különböző hibakezelési algoritmusok
 - Kód optimalizálás (ciklusidő gyorsítása ill. kevesebb változó)
+- Távoli vezérlés, autómatikus értesítés küldés (HTTP, Android kliens, )
+- Bővíthetőség
