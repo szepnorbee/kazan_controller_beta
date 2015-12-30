@@ -12,7 +12,7 @@ void lcdUpd() {
     lcd.setCursor(0, 1);
     lcd.print((millis() / 1000) / 60); lcd.print("min");
     lcd.setCursor(10, 1);
-    lcd.print(tempC,1);lcd.print(" C");     // 'xxxxxxxxx25.50 C'
+    lcd.print(tempC,1);lcd.print(" C");     // 'xxxxxxxxxx25.5 C'
 
     if (motorState == LOW) {
       lcd.setCursor(14, 0);
@@ -94,18 +94,37 @@ void lcdUpd() {
 
   if (page == 11) {
     lcd.setCursor(0, 0);
+    lcd.print("Termosztat      "); 
+    lcd.setCursor(0, 1);
+    if (thermostat == true) {
+      lcd.print("BE      INACTIVE");
+    } else {
+      lcd.print("KI      INACTIVE");
+    }
+  }
+
+  if (page == 12) {
+    lcd.setCursor(0, 0);
     lcd.print("Beall. mentes   ");
     lcd.setCursor(0, 1);
     lcd.print("    + vagy -    ");
   }
 
-  if (page == 12) {
+  if (page == 13) {
     lcd.setCursor(0, 0);
     lcd.print("KEZI Motor: ");
-    lcd.print(motorState); lcd.print("   ");
+    if (motorState) {
+      lcd.print("KI  ");
+    } else {
+      lcd.print("BE  ");
+    }
     lcd.setCursor(0, 1);
     lcd.print("UZEM Venti: ");
-    lcd.print(fanState);
+    if (fanState) {
+      lcd.print("KI  ");
+    } else {
+      lcd.print("BE  ");
+    }
   }
 }
 

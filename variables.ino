@@ -1,4 +1,4 @@
-void UpdVar() {
+void updVar() {
 
   if (reqHeat == true) { 
     OnTime = motorStart * egyezer;

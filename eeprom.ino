@@ -1,5 +1,5 @@
+///////////////EEPROM olvasás////////////
 void memRead() {
-  ////////////EEPROM mentés///////////
   motorStart = EEPROM.read(0);
   motorStop = EEPROM.read(1);
   motorStart2 = EEPROM.read(2);
@@ -8,9 +8,10 @@ void memRead() {
   fanDelay = EEPROM.read(5);
   setTemp = EEPROM.read(6);
   histeresis = EEPROM.read(7);
+  thermostat = EEPROM.read(8);
 }
 
-///////////////EEPROM olvasás////////////
+///////////////EEPROM írás////////////////
 void memWrite() {
   EEPROM.write(0, motorStart);
   EEPROM.write(1, motorStop);
@@ -20,4 +21,9 @@ void memWrite() {
   EEPROM.write(5, fanDelay);
   EEPROM.write(6, setTemp);
   EEPROM.write(7, histeresis);
+  EEPROM.write(8, thermostat);
+  lcd.setCursor(14, 0);
+  lcd.print("OK");
+  delay(100);
+  page = 1;
 }

@@ -26,8 +26,8 @@ int fel = 3;
 int le = 4;
 int jobb = 5;
 
-const int buttonDebounce = 150;   //perges mentesites értékek
-const int arrowDebounce = 450;   //perges mentesites nyilak
+const int buttonDebounce = 100;   //perges mentesites értékek
+const int arrowDebounce = 350;   //perges mentesites nyilak
 
 //Menü oldal valtozok///////////
 byte page = 1;
@@ -52,9 +52,10 @@ byte fanTime = 0;
 boolean fanTimeout = true;
 boolean upDated = false;
 //////////////// Hőmérséklet szabályozás ////////////////////////
-int setTemp = 60;
-int histeresis = 0;
+byte setTemp = 60;
+byte histeresis = 1;
 float tempC = 0;
+boolean thermostat = true;
 
 //Timer valtozok/////////////////////////////////////////////////
 unsigned long elozoMillis = 0;   // LCD frissites
@@ -125,7 +126,7 @@ void loop() {
     elozoMillis = mostaniMillis;
     lcdUpd();                             // Kijelző frissítés másodpercenként
 
-    if (page != 1) menuTimer++;           // Vissza a főmenübe 20 mp múlva
+    if (page != 1 && page!=13) menuTimer++;           // Vissza a főmenübe 20 mp múlva
     if (menuTimer >= 20) {
       page = 1;
       menuTimer = 0;
@@ -152,7 +153,7 @@ void loop() {
 
   readInput();
   readButtons();
-  UpdVar();
+  updVar();
   
   ////////////////////////////////// CSIGA VEZÉRLÉS //////////////////////////////
   unsigned long currentMillis = millis();

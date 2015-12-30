@@ -5,7 +5,7 @@ void readButtons() {
     if (digitalRead(bal) == HIGH) {
       dataChanged = true;
       menuTimer = 0;
-      if (page < 12) page++;
+      if (page < 13) page++;
     }
   }
 
@@ -56,21 +56,28 @@ void readButtons() {
         lcdUpd();
         break;
       case 9:
-        if (setTemp < 95) setTemp = setTemp +5;
+        if (setTemp < 95) setTemp += 5;  //
+        lcdUpd();
         break;
       case 10:
-        if (histeresis < 5) histeresis = histeresis + .25;
+        if (histeresis < 5) histeresis += 1;
+        lcdUpd();
         break;
       case 11:
-        ////////////EEPROM mentés///////////
-        memWrite();
-        ////////////////////////////////////
-        lcd.setCursor(0, 1);
-        lcd.print("    + vagy -  OK");
-        delay(500);
+        if (thermostat == true) {
+          thermostat = false; 
+        } else {
+          thermostat = true;
+        }
         lcdUpd();
         break;
       case 12:
+        ////////////EEPROM mentés///////////
+        memWrite();
+        ////////////////////////////////////
+        lcdUpd();
+        break;
+      case 13:
         if (fanState == HIGH) {
           fanState = LOW;
         } else {
@@ -120,21 +127,28 @@ void readButtons() {
         lcdUpd();
         break;
       case 9:
-        if (setTemp > 40) setTemp = setTemp -5;
+        if (setTemp > 40) setTemp -= 5;
+        lcdUpd();
         break;
       case 10:
-        if (histeresis > 0) histeresis = histeresis - .25;  
+        if (histeresis > 0) histeresis -= 1; 
+        lcdUpd(); 
         break;
       case 11:
+        if (thermostat == true) {
+          thermostat = false; 
+        } else {
+          thermostat = true;
+        }
+        lcdUpd();
+        break;   
+      case 12:
         ////////////EEPROM mentés///////////
         memWrite();
         ////////////////////////////////////
-        lcd.setCursor(0, 1);
-        lcd.print("    + vagy -  OK");
-        delay(500);
         lcdUpd();
         break;
-      case 12:
+      case 13:
         if (motorState == HIGH) {
           motorState = LOW;
         } else {
