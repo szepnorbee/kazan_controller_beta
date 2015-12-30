@@ -13,18 +13,18 @@ LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27 for a 16 char
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
-int heatPin = 10;
-int fanPin = 11;
-int motorPin = 12;
-int ledPin = 13;
+const int heatPin = 10;
+const int fanPin = 11;
+const int motorPin = 12;
+const int ledPin = 13;
 boolean ledState = true;
-int motorState = HIGH;
-int fanState = HIGH;
+unsigned int motorState = HIGH;
+unsigned int fanState = HIGH;
 
-int bal = 2;
-int fel = 3;
-int le = 4;
-int jobb = 5;
+const int bal = 2;
+const int fel = 3;
+const int le = 4;
+const int jobb = 5;
 
 const int buttonDebounce = 100;   //perges mentesites értékek
 const int arrowDebounce = 350;   //perges mentesites nyilak
@@ -60,14 +60,14 @@ boolean thermostat = true;
 unsigned long elozoMillis = 0;   // LCD frissites
 const long lcdUpdate = 1000;      // LCD frissites
 
-long egyezer = 1000;       //másodperc
-long hatvanezer = 60000;   //perc
+const long egyezer = 1000;       //másodperc
+const long hatvanezer = 60000;   //perc
 
 boolean valtozas = false;
 
 unsigned long previousMillis = 0;
-long OnTime = 0;
-long OffTime = 0;
+unsigned long OnTime = 0;
+unsigned long OffTime = 0;
 
 //////////////////////////////////////////////////////////////////
 

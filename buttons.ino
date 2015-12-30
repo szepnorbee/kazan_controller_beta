@@ -163,6 +163,8 @@ void readButtons() {
 
 //////////////////////////ÜZEMMÓD VÁLTÁS - BEMENETI JEL//////////////////////////
 void readInput() {
+ if (thermostat == false) {         // Bemenet vezérelt üzemmód
+  
     if (digitalRead(heatPin) == LOW) {       // Ha alacsony akkor fűtűnk
     delay(400);
     if (digitalRead(heatPin) == LOW) {
@@ -173,5 +175,18 @@ void readInput() {
       digitalWrite(fanPin, HIGH);        // Ventillátor kikapcsolása
     }
   }
+ } else if (thermostat == true) {   // Thermostat vezérelt üzemmód
+  //valami
+   if (tempC < setTemp - histeresis) {
+      reqHeat = true;
+      digitalWrite(fanPin, LOW);         // Ventillátor bekapcsolása
+    } 
+   if (tempC >= setTemp) {
+      reqHeat = false;
+      digitalWrite(fanPin, HIGH);         // Ventillátor kikapcsolása 
+   }
+ }
+
+  
 }
 
