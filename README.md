@@ -1,6 +1,6 @@
 Kazán vezérlő - Verzió 15.12.28
 
-Fa törmelék táplálású kazán adagoló autómatika.
+Fa apriték táplálású kazán adagoló autómatika.
 
 Jellemzői:
 - Menü vezérelt felhasználói felület
