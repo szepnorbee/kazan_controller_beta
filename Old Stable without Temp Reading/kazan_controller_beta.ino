@@ -1,17 +1,13 @@
 //Kazán vezérlő beta
 //Szerző: Szép Norbert
 
-#include <OneWire.h>
-#include <DallasTemperature.h>
+//#include <OneWire.h>
+//#include <DallasTemperature.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <EEPROM.h>
 
 LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27 for a 16 chars and 2 line display APA
-
-#define ONE_WIRE_BUS 2
-OneWire oneWire(ONE_WIRE_BUS);
-DallasTemperature sensors(&oneWire);
 
 int heatPin = 10;
 int fanPin = 11;
@@ -54,11 +50,10 @@ boolean upDated = false;
 //////////////// Hőmérséklet szabályozás ////////////////////////
 int setTemp = 60;
 int histeresis = 0;
-float tempC = 0;
 
 //Timer valtozok/////////////////////////////////////////////////
 unsigned long elozoMillis = 0;   // LCD frissites
-const long lcdUpdate = 1000;      // LCD frissites
+const long interval = 1000;      // LCD frissites
 
 long egyezer = 1000;       //másodperc
 long hatvanezer = 60000;   //perc
@@ -74,7 +69,6 @@ long OffTime = 0;
 void setup() {
 
   Serial.begin(9600);
-  sensors.begin();
   lcd.init();                      // initialize the lcd
   
   OnTime = motorStart * egyezer;
@@ -83,7 +77,7 @@ void setup() {
   lcd.backlight();
   lcd.print(" Kazan vezerlo ");
   lcd.setCursor(0, 1);
-  lcd.print(" Ver: 15.12.30  ");
+  lcd.print(" Ver: 15.12.28  ");
 
   pinMode(heatPin, INPUT);
   digitalWrite(heatPin, HIGH);
@@ -120,7 +114,7 @@ void loop() {
   ///////////////////////////////// KIJELZŐ FRISSÍTÉS /////////////////////////////////
   unsigned long mostaniMillis = millis();
 
-  if (mostaniMillis - elozoMillis >= lcdUpdate) {      // LCD frissites
+  if (mostaniMillis - elozoMillis >= interval) {      // LCD frissites
 
     elozoMillis = mostaniMillis;
     lcdUpd();                             // Kijelző frissítés másodpercenként
@@ -136,16 +130,13 @@ void loop() {
     if (ledState == true) {
       ledState = false;
       digitalWrite(ledPin, HIGH);
-      lcd.setCursor(0, 0);
+      lcd.setCursor(15, 1);
       lcd.print("*");
-      sensors.requestTemperatures();
     } else {
       ledState = true;
       digitalWrite(ledPin, LOW);
-      lcd.setCursor(0, 0);
+      lcd.setCursor(15, 1);
       lcd.print(" ");
-      tempC = sensors.getTempCByIndex(0);
-      Serial.println(tempC,1);
     }
     
   }

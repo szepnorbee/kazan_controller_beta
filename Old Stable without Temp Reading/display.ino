@@ -2,7 +2,8 @@ void lcdUpd() {
   lcd.setCursor(0, 0);
 
   if (page == 1) {
-    lcd.setCursor(2, 0);
+    lcd.setCursor(0, 0);
+    lcd.print("Stat: ");
     if (reqHeat == true) {                  
       lcd.print("FUTES   ");
     }
@@ -10,9 +11,7 @@ void lcdUpd() {
       lcd.print("TARTAS  ");
     }
     lcd.setCursor(0, 1);
-    lcd.print((millis() / 1000) / 60); lcd.print("min");
-    lcd.setCursor(10, 1);
-    lcd.print(tempC,1);lcd.print(" C");     // 'xxxxxxxxx25.50 C'
+    lcd.print("Futasido: "); lcd.print((millis() / 1000) / 60); lcd.print(" m");
 
     if (motorState == LOW) {
       lcd.setCursor(14, 0);
