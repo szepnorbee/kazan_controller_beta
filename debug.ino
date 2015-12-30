@@ -1,8 +1,8 @@
-void dbg() {
-  if (debug == true) {
-    //Serial.print("currentMillis: ");Serial.println(currentMillis);
-    //Serial.print("Szazalek: ");Serial.println(percentage);
-    //Serial.print("OnTime: ");Serial.println(OnTime);
-  }
+void debug() {
+      Serial.print("Temp   : ");Serial.println(tempC, 1);
+      Serial.print("setTemp: ");Serial.println(setTemp);
+      Serial.print("Hister : ");Serial.println(histeresis);
+      Serial.print("Thermos: ");Serial.println(thermostat); 
+      Serial.print("mTimer : ");Serial.println(menuTimer); 
 }
 

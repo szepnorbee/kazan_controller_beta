@@ -45,7 +45,6 @@ byte fanDelay = 10;
 boolean manual = false;
 boolean bLight = true;
 boolean dataChanged = false;
-boolean debug = false;
 boolean reqHeat = false;
 /////////////// Levegő késleltetés //////////////////////////////
 byte fanTime = 0;
@@ -77,7 +76,7 @@ void setup() {
   Serial.begin(9600);
   sensors.begin();
   lcd.init();                      // initialize the lcd
-  
+
   OnTime = motorStart * egyezer;
   OffTime = motorStop * egyezer;
 
@@ -126,14 +125,14 @@ void loop() {
     elozoMillis = mostaniMillis;
     lcdUpd();                             // Kijelző frissítés másodpercenként
 
-    if (page != 1 && page!=13) menuTimer++;           // Vissza a főmenübe 20 mp múlva
+    if (page != 1 && page != 13) menuTimer++;         // Vissza a főmenübe 20 mp múlva
     if (menuTimer >= 20) {
       page = 1;
       menuTimer = 0;
     }
 
-
-  ///////////////////////SZÍVVERÉS/////////////////////////////////////////////
+    debug();
+    ///////////////////////SZÍVVERÉS/////////////////////////////////////////////
     if (ledState == true) {
       ledState = false;
       digitalWrite(ledPin, HIGH);
@@ -146,15 +145,14 @@ void loop() {
       lcd.setCursor(0, 0);
       lcd.print(" ");
       tempC = sensors.getTempCByIndex(0);
-      Serial.println(tempC,1);
     }
-    
+
   }
 
   readInput();
   readButtons();
   updVar();
-  
+
   ////////////////////////////////// CSIGA VEZÉRLÉS //////////////////////////////
   unsigned long currentMillis = millis();
 
