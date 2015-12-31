@@ -52,7 +52,7 @@ boolean fanTimeout = true;
 boolean upDated = false;
 //////////////// Hőmérséklet szabályozás ////////////////////////
 byte setTemp = 60;
-byte histeresis = 1;
+byte histeresis = 3;
 float tempC = 0;
 boolean thermostat = true;
 
@@ -131,7 +131,8 @@ void loop() {
       menuTimer = 0;
     }
 
-    debug();
+    //debug();                                         // Soros port hibakeresés
+    
     ///////////////////////SZÍVVERÉS/////////////////////////////////////////////
     if (ledState == HIGH) {
       ledState = LOW;
