@@ -17,9 +17,9 @@ const int heatPin = 10;
 const int fanPin = 11;
 const int motorPin = 12;
 const int ledPin = 13;
-boolean ledState = true;
-unsigned int motorState = HIGH;
-unsigned int fanState = HIGH;
+boolean ledState = HIGH;
+boolean motorState = HIGH;   // unsigned int volt
+boolean fanState = HIGH;
 
 const int bal = 2;
 const int fel = 3;
@@ -34,10 +34,10 @@ byte page = 1;
 byte menuTimer = 0;
 
 //Beállítások változói///////////
-byte motorStop = 3;                //Behajt üzem idő  3 volt
+byte motorStop = 3;           // Fűtés üzem
 byte motorStart = 4;
 
-byte motorStop2 = 3;                //Szünet üzem idő
+byte motorStop2 = 3;          // Tűztartás üzem     
 byte motorStart2 = 4;
 
 byte motorTest = 2;
@@ -83,7 +83,7 @@ void setup() {
   lcd.backlight();
   lcd.print(" Kazan vezerlo ");
   lcd.setCursor(0, 1);
-  lcd.print(" Ver: 15.12.30  ");
+  lcd.print(" Ver: 15.12.31  ");
 
   pinMode(heatPin, INPUT);
   digitalWrite(heatPin, HIGH);
@@ -133,14 +133,14 @@ void loop() {
 
     debug();
     ///////////////////////SZÍVVERÉS/////////////////////////////////////////////
-    if (ledState == true) {
-      ledState = false;
+    if (ledState == HIGH) {
+      ledState = LOW;
       digitalWrite(ledPin, HIGH);
       lcd.setCursor(0, 0);
       lcd.print("*");
       sensors.requestTemperatures();
     } else {
-      ledState = true;
+      ledState = HIGH;
       digitalWrite(ledPin, LOW);
       lcd.setCursor(0, 0);
       lcd.print(" ");
