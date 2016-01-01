@@ -97,9 +97,9 @@ void lcdUpd() {
     lcd.print("Termosztat      ");
     lcd.setCursor(0, 1);
     if (thermostat == true) {
-      lcd.print("BE      INACTIVE");
+      lcd.print("BE              ");
     } else {
-      lcd.print("KI      INACTIVE");
+      lcd.print("KI              ");
     }
   }
 

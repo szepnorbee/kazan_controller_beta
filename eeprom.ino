@@ -25,5 +25,6 @@ void memWrite() {
   lcd.setCursor(14, 0);
   lcd.print("OK");
   delay(100);
+  lcd.clear();
   page = 1;
 }

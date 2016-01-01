@@ -83,7 +83,7 @@ void setup() {
   lcd.backlight();
   lcd.print(" Kazan vezerlo ");
   lcd.setCursor(0, 1);
-  lcd.print(" Ver: 15.12.31  ");
+  lcd.print(" Ver: 16.01.01  ");
 
   pinMode(heatPin, INPUT);
   digitalWrite(heatPin, HIGH);
@@ -138,13 +138,17 @@ void loop() {
       ledState = LOW;
       digitalWrite(ledPin, HIGH);
       lcd.setCursor(0, 0);
+      if (page==1) {
       lcd.print("*");
+      }
       sensors.requestTemperatures();
     } else {
       ledState = HIGH;
       digitalWrite(ledPin, LOW);
       lcd.setCursor(0, 0);
+      if (page==1) {
       lcd.print(" ");
+      }
       tempC = sensors.getTempCByIndex(0);
     }
 

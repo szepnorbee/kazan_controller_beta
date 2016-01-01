@@ -5,6 +5,7 @@ void readButtons() {
     if (digitalRead(bal) == HIGH) {
       dataChanged = true;
       menuTimer = 0;
+      lcd.clear();
       if (page < 13) page++;
     }
   }
@@ -14,6 +15,7 @@ void readButtons() {
     if (digitalRead(jobb) == HIGH) {
       dataChanged = true;
       menuTimer = 0;
+      lcd.clear();
       if (page > 1) page -= 1;
     }
   }
@@ -177,11 +179,11 @@ void readInput() {
   }
  } else if (thermostat == true) {   // Thermostat vezérelt üzemmód
   //valami
-   if (tempC < setTemp - histeresis) {
+   if (tempC < setTemp - histeresis && digitalRead(heatPin) == LOW) {
       reqHeat = true;
       digitalWrite(fanPin, LOW);         // Ventillátor bekapcsolása
     } 
-   if (tempC >= setTemp) {
+   if (tempC >= setTemp || digitalRead(heatPin) == HIGH) {
       reqHeat = false;
       digitalWrite(fanPin, HIGH);         // Ventillátor kikapcsolása 
    }
