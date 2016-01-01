@@ -126,5 +126,12 @@ void lcdUpd() {
       lcd.print("BE  ");
     }
   }
+
+  if (page == 14) {
+    lcd.setCursor(0, 0);
+    lcd.print("   SW author    ");
+    lcd.setCursor(0, 1);
+    lcd.print("  Szep Norbert  ");
+  }
 }
 

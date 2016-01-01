@@ -6,7 +6,7 @@ void readButtons() {
       dataChanged = true;
       menuTimer = 0;
       lcd.clear();
-      if (page < 13) page++;
+      if (page < 14) page++;
     }
   }
 
