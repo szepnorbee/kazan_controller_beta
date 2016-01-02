@@ -8,7 +8,7 @@
 #include <EEPROM.h>
 #include <Bounce2.h>
 
-LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27 for a 16 chars and 2 line display APA
+LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27 for a 16 chars and 2 line display
 
 #define ONE_WIRE_BUS 2
 OneWire oneWire(ONE_WIRE_BUS);
@@ -45,10 +45,10 @@ byte menuTimer = 0;
 byte motorStop = 3;           // Fűtés üzem
 byte motorStart = 4;
 
-byte motorStop2 = 3;          // Tűztartás üzem     
+byte motorStop2 = 3;          // Tűztartás üzem
 byte motorStart2 = 4;
 
-byte motorTest = 2;
+byte motorTest = 1;
 byte fanDelay = 10;
 boolean manual = false;
 boolean bLight = true;
@@ -89,9 +89,9 @@ void setup() {
   OffTime = motorStop * egyezer;
 
   lcd.backlight();
-  lcd.print(" Kazan vezerlo ");
+  lcd.print(" Kazan vezerlo  ");
   lcd.setCursor(0, 1);
-  lcd.print(" Ver: 16.01.01  ");
+  lcd.print(" Ver: 16.01.02  ");
 
   pinMode(heatPin, INPUT_PULLUP);
   debouncerH.attach(heatPin);
@@ -154,22 +154,22 @@ void loop() {
     }
 
     //debug();                                         // Soros port hibakeresés
-    
+
     ///////////////////////SZÍVVERÉS/////////////////////////////////////////////
     if (ledState == HIGH) {
       ledState = LOW;
       digitalWrite(ledPin, HIGH);
       lcd.setCursor(0, 0);
-      if (page==1) {
-      lcd.print("*");
+      if (page == 1) {
+        lcd.print("*");
       }
       sensors.requestTemperatures();
     } else {
       ledState = HIGH;
       digitalWrite(ledPin, LOW);
       lcd.setCursor(0, 0);
-      if (page==1) {
-      lcd.print(" ");
+      if (page == 1) {
+        lcd.print(" ");
       }
       tempC = sensors.getTempCByIndex(0);
     }
