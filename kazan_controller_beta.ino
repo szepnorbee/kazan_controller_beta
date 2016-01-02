@@ -19,6 +19,8 @@ Bounce debouncerF = Bounce();
 Bounce debouncerL = Bounce();
 Bounce debouncerJ = Bounce();
 
+Bounce debouncerH = Bounce();
+
 const int heatPin = 10;
 const int fanPin = 11;
 const int motorPin = 12;
@@ -91,8 +93,9 @@ void setup() {
   lcd.setCursor(0, 1);
   lcd.print(" Ver: 16.01.01  ");
 
-  pinMode(heatPin, INPUT);
-  digitalWrite(heatPin, HIGH);
+  pinMode(heatPin, INPUT_PULLUP);
+  debouncerH.attach(heatPin);
+  debouncerH.interval(buttonDebounce); // interval in ms
 
   pinMode(fanPin, OUTPUT);
   pinMode(ledPin, OUTPUT);
@@ -135,6 +138,7 @@ void loop() {
   debouncerF.update();
   debouncerL.update();
   debouncerJ.update();
+  debouncerH.update();
   ///////////////////////////////// KIJELZŐ FRISSÍTÉS /////////////////////////////////
   unsigned long mostaniMillis = millis();
 

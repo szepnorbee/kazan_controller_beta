@@ -4,7 +4,7 @@ void readButtons() {
   int valF = debouncerF.read();
   int valL = debouncerL.read();
   int valJ = debouncerJ.read();
-
+  
     if (valB == LOW) {
       dataChanged = true;
       menuTimer = 0;
@@ -163,30 +163,28 @@ void readButtons() {
 
 //////////////////////////ÜZEMMÓD VÁLTÁS - BEMENETI JEL//////////////////////////
 void readInput() {
+ int valH = debouncerH.read();
+  
  if (thermostat == false) {         // Bemenet vezérelt üzemmód
   
-    if (digitalRead(heatPin) == LOW) {       // Ha alacsony akkor fűtűnk
-    delay(400);
-    if (digitalRead(heatPin) == LOW) {
+    if (valH == LOW) {                   // Ha alacsony akkor fűtűnk
       reqHeat = true;
       digitalWrite(fanPin, LOW);         // Ventillátor bekapcsolása
     } else {
       reqHeat = false;
       digitalWrite(fanPin, HIGH);        // Ventillátor kikapcsolása
     }
-  }
+  
  } else if (thermostat == true) {   // Thermostat vezérelt üzemmód
   //valami
-   if (tempC < setTemp - histeresis && digitalRead(heatPin) == LOW) {
+   if (tempC < setTemp - histeresis && valH == LOW) {
       reqHeat = true;
       digitalWrite(fanPin, LOW);         // Ventillátor bekapcsolása
     } 
-   if (tempC >= setTemp || digitalRead(heatPin) == HIGH) {
+   if (tempC >= setTemp || valH == HIGH) {
       reqHeat = false;
       digitalWrite(fanPin, HIGH);         // Ventillátor kikapcsolása 
    }
- }
-
-  
+ } 
 }
 
