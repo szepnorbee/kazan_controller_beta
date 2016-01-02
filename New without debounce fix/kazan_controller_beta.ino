@@ -6,18 +6,12 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <EEPROM.h>
-#include <Bounce2.h>
 
 LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27 for a 16 chars and 2 line display APA
 
 #define ONE_WIRE_BUS 2
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
-
-Bounce debouncerB = Bounce();
-Bounce debouncerF = Bounce();
-Bounce debouncerL = Bounce();
-Bounce debouncerJ = Bounce();
 
 const int heatPin = 10;
 const int fanPin = 11;
@@ -33,7 +27,7 @@ const int le = 4;
 const int jobb = 5;
 
 const int buttonDebounce = 100;   //perges mentesites értékek
-const int arrowDebounce = 250;   //perges mentesites nyilak
+const int arrowDebounce = 350;   //perges mentesites nyilak
 
 //Menü oldal valtozok///////////
 byte page = 1;
@@ -98,17 +92,9 @@ void setup() {
   pinMode(ledPin, OUTPUT);
   pinMode(motorPin, OUTPUT);
   pinMode(bal, INPUT);
-  debouncerB.attach(bal);
-  debouncerB.interval(arrowDebounce); // interval in ms
   pinMode(fel, INPUT);
-  debouncerF.attach(fel);
-  debouncerF.interval(buttonDebounce); // interval in ms
   pinMode(le, INPUT);
-  debouncerL.attach(le);
-  debouncerL.interval(buttonDebounce); // interval in ms
   pinMode(jobb, INPUT);
-  debouncerJ.attach(jobb);
-  debouncerJ.interval(arrowDebounce); // interval in ms
 
   digitalWrite(fanPin, fanState);
   digitalWrite(motorPin, motorState);
@@ -131,10 +117,6 @@ void setup() {
 
 void loop() {
 
-  debouncerB.update();
-  debouncerF.update();
-  debouncerL.update();
-  debouncerJ.update();
   ///////////////////////////////// KIJELZŐ FRISSÍTÉS /////////////////////////////////
   unsigned long mostaniMillis = millis();
 

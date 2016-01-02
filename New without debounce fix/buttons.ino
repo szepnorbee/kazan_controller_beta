@@ -1,28 +1,29 @@
 void readButtons() {
 
-  int valB = debouncerB.read();
-  int valF = debouncerF.read();
-  int valL = debouncerL.read();
-  int valJ = debouncerJ.read();
-
-    if (valB == LOW) {
+  if (digitalRead(bal) == HIGH) {
+    delay(arrowDebounce);
+    if (digitalRead(bal) == HIGH) {
       dataChanged = true;
       menuTimer = 0;
       lcd.clear();
       if (page < 14) page++;
     }
-  
-    if (valJ == LOW) {
+  }
+
+  if (digitalRead(jobb) == HIGH) {
+    delay(arrowDebounce);
+    if (digitalRead(jobb) == HIGH) {
       dataChanged = true;
       menuTimer = 0;
       lcd.clear();
       if (page > 1) page -= 1;
     }
-  
+  }
 
-  if (valF == LOW) {
+  if (digitalRead(fel) == HIGH) {
     menuTimer = 0;
     dataChanged = true;
+    delay(buttonDebounce);
     switch (page) {
       case 2:
         motorStart++;
@@ -90,9 +91,10 @@ void readButtons() {
     }
   }
 
-  if (valL == LOW) {
+  if (digitalRead(le) == HIGH) {
     menuTimer = 0;
     dataChanged = true;
+    delay(buttonDebounce);
     switch (page) {
       case 2:
         motorStart--;
