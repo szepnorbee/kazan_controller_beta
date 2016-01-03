@@ -142,7 +142,7 @@ void lcdUpd() {
     lcd.setCursor(0, 0);
     lcd.print(F(" Szabad memoria "));
     lcd.setCursor(0, 1);
-    lcd.print(freeRam());
+    lcd.print(freeRam());lcd.print(F(" bytes    "));
   }
   
   if (page == 16) {

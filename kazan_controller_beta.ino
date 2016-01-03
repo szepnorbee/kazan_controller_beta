@@ -100,6 +100,7 @@ void setup() {
   digitalWrite(fanPin, fanState);
   digitalWrite(motorPin, motorState);
   delay(1000);
+  memRead();                    //Változók beolvasása EEPROM-ból
 
   lcd.clear();
   
@@ -113,8 +114,6 @@ void setup() {
   lcd.clear();
 
   Serial.println(F("Program indul.."));
-
-  memRead();                    //Változók beolvasása EEPROM-ból
 }
 
 void loop() {
@@ -154,7 +153,6 @@ void loop() {
       }
       tempC = sensors.getTempCByIndex(0);
     }
-
   }
 
   readInput();

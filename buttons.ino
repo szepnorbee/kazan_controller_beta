@@ -129,6 +129,7 @@ void readButtons() {
         break;
       case 6:
         motorTest--;
+        if (motorTest < 0) motorTest = 0;
         lcdUpd();
         break;
       case 7:
