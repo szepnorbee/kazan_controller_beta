@@ -5,8 +5,9 @@ void readButtons() {
     if (digitalRead(bal) == HIGH) {
       dataChanged = true;
       menuTimer = 0;
+      page++;
       lcd.clear();
-      if (page < 14) page++;
+      if (page > 15) page = 1;
     }
   }
 
@@ -15,8 +16,9 @@ void readButtons() {
     if (digitalRead(jobb) == HIGH) {
       dataChanged = true;
       menuTimer = 0;
+      page--;
       lcd.clear();
-      if (page > 1) page -= 1;
+      if (page < 1) page = 15;
     }
   }
 
@@ -88,6 +90,13 @@ void readButtons() {
         digitalWrite(fanPin, fanState);
         lcdUpd();
         break;
+      case 14:
+        if (serDebug == false) {
+          serDebug = true;
+        } else {
+          serDebug = false;
+        }
+        break;
     }
   }
 
@@ -158,6 +167,13 @@ void readButtons() {
         }
         digitalWrite(motorPin, motorState);
         lcdUpd();
+        break;
+      case 14:
+        if (serDebug == false) {
+          serDebug = true;
+        } else {
+          serDebug = false;
+        }
         break;
     }
   }

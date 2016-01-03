@@ -27,7 +27,7 @@ const int le = 4;
 const int jobb = 5;
 
 const int buttonDebounce = 100;   //perges mentesites értékek
-const int arrowDebounce = 350;   //perges mentesites nyilak
+const int arrowDebounce = 250;   //perges mentesites nyilak
 
 //Menü oldal valtozok///////////
 byte page = 1;
@@ -46,6 +46,7 @@ boolean manual = false;
 boolean bLight = true;
 boolean dataChanged = false;
 boolean reqHeat = false;
+boolean serDebug = false;
 /////////////// Levegő késleltetés //////////////////////////////
 byte fanTime = 0;
 boolean fanTimeout = true;
@@ -131,7 +132,7 @@ void loop() {
       menuTimer = 0;
     }
 
-    debug();                                         // Soros port hibakeresés
+    if (serDebug == true) debug();                                         // Soros port hibakeresés
     
     ///////////////////////SZÍVVERÉS/////////////////////////////////////////////
     if (ledState == HIGH) {
