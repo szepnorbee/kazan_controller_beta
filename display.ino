@@ -4,10 +4,10 @@ void lcdUpd() {
   if (page == 1) {
     lcd.setCursor(2, 0);
     if (reqHeat == true) {
-      lcd.print("FUTES   ");
+      lcd.print(F("FUTES       "));
     }
     else {
-      lcd.print("TARTAS  ");
+      lcd.print(F("TARTAS      "));
     }
     lcd.setCursor(0, 1);
     lcd.print((millis() / 1000) / 60); lcd.print("min");
@@ -25,44 +25,44 @@ void lcdUpd() {
 
   if (page == 2) {
     lcd.setCursor(0, 0);
-    lcd.print("Futes START ido ");
+    lcd.print(F("Futes START ido "));
     lcd.setCursor(0, 1);
-    lcd.print("T= "); lcd.print(motorStart); lcd.print(" s         ");
+    lcd.print("T= "); lcd.print(motorStart); lcd.print(F(" s         "));
   }
 
   if (page == 3) {
     lcd.setCursor(0, 0);
-    lcd.print("Futes STOP ido  ");
+    lcd.print(F("Futes STOP ido  "));
     lcd.setCursor(0, 1);
-    lcd.print("T= "); lcd.print(motorStop); lcd.print(" s          ");
+    lcd.print("T= "); lcd.print(motorStop); lcd.print(F(" s          "));
   }
 
   if (page == 4) {
     lcd.setCursor(0, 0);
-    lcd.print("Tuztartas START ");
+    lcd.print(F("Tuztartas START "));
     lcd.setCursor(0, 1);
-    lcd.print("T= "); lcd.print(motorStart2); lcd.print(" s          ");
+    lcd.print("T= "); lcd.print(motorStart2); lcd.print(F(" s          "));
   }
 
   if (page == 5) {
     lcd.setCursor(0, 0);
-    lcd.print("Tuztartas STOP  ");
+    lcd.print(F("Tuztartas STOP  "));
     lcd.setCursor(0, 1);
-    lcd.print("T= "); lcd.print(motorStop2); lcd.print(" perc      ");
+    lcd.print("T= "); lcd.print(motorStop2); lcd.print(F(" perc      "));
   }
 
   if (page == 6) {
     lcd.setCursor(0, 0);
-    lcd.print("Motor teszt ido ");
+    lcd.print(F("Motor teszt ido "));
     lcd.setCursor(0, 1);
-    lcd.print("T= "); lcd.print(motorTest); lcd.print(" s          ");
+    lcd.print("T= "); lcd.print(motorTest); lcd.print(F(" s          "));
   }
 
   if (page == 7) {
     lcd.setCursor(0, 0);
-    lcd.print("Hattervilagitas ");
+    lcd.print(F("Hattervilagitas "));
     lcd.setCursor(0, 1);
-    lcd.print("Ertek= "); lcd.print(bLight); lcd.print("        ");
+    lcd.print("Ertek= "); lcd.print(bLight); lcd.print(F("        "));
 
     if (bLight == true) {                          //Háttérvilágitás beállítása
       lcd.backlight();
@@ -73,53 +73,53 @@ void lcdUpd() {
 
   if (page == 8) {
     lcd.setCursor(0, 0);
-    lcd.print("Levego kesleltet");
+    lcd.print(F("Levego kesleltet"));
     lcd.setCursor(0, 1);
-    lcd.print("T= "); lcd.print(fanDelay); lcd.print(" s INACTIVE  ");
+    lcd.print("T= "); lcd.print(fanDelay); lcd.print(F(" s INACTIVE  "));
   }
 
   if (page == 9) {
     lcd.setCursor(0, 0);
-    lcd.print("Viz homerseklet ");
+    lcd.print(F("Viz homerseklet "));
     lcd.setCursor(0, 1);
-    lcd.print(setTemp); lcd.print(" C            ");
+    lcd.print(setTemp); lcd.print(F(" C            "));
   }
 
   if (page == 10) {
     lcd.setCursor(0, 0);
-    lcd.print("Hiszterezis     ");
+    lcd.print(F("Hiszterezis     "));
     lcd.setCursor(0, 1);
-    lcd.print(histeresis); lcd.print(" C        ");
+    lcd.print(histeresis); lcd.print(" C ");
   }
 
   if (page == 11) {
     lcd.setCursor(0, 0);
-    lcd.print("Termosztat      ");
+    lcd.print(F("Termosztat      "));
     lcd.setCursor(0, 1);
     if (thermostat == true) {
-      lcd.print("BE              ");
+      lcd.print(F("BE              "));
     } else {
-      lcd.print("KI              ");
+      lcd.print(F("KI              "));
     }
   }
 
   if (page == 12) {
     lcd.setCursor(0, 0);
-    lcd.print("Beall. mentes   ");
+    lcd.print(F("Beall. mentes   "));
     lcd.setCursor(0, 1);
-    lcd.print("    + vagy -    ");
+    lcd.print(F("    + vagy -    "));
   }
 
   if (page == 13) {
     lcd.setCursor(0, 0);
-    lcd.print("KEZI Motor: ");
+    lcd.print(F("KEZI Motor: "));
     if (motorState == HIGH) {
       lcd.print("KI  ");
     } else {
       lcd.print("BE  ");
     }
     lcd.setCursor(0, 1);
-    lcd.print("UZEM Venti: ");
+    lcd.print(F("UZEM Venti: "));
     if (fanState == HIGH) {
       lcd.print("KI  ");
     } else {
@@ -129,20 +129,27 @@ void lcdUpd() {
 
   if (page == 14) {
     lcd.setCursor(0, 0);
-    lcd.print("  Serial debug  ");
+    lcd.print(F("  Serial debug  "));
     lcd.setCursor(0, 1);
     if (serDebug == true) {
-      lcd.print("BE  ");
+      lcd.print(F("BE              "));
     } else {
-      lcd.print("KI  ");
+      lcd.print(F("KI              "));
     }
   }
 
   if (page == 15) {
     lcd.setCursor(0, 0);
-    lcd.print("   SW author    ");
+    lcd.print(F(" Szabad memoria "));
     lcd.setCursor(0, 1);
-    lcd.print("  Szep Norbert  ");
+    lcd.print(freeRam());
+  }
+  
+  if (page == 16) {
+    lcd.setCursor(0, 0);
+    lcd.print(F("   SW author    "));
+    lcd.setCursor(0, 1);
+    lcd.print(F("  Szep Norbert  "));
   }
 }
 

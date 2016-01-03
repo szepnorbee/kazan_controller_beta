@@ -6,8 +6,11 @@ void readButtons() {
       dataChanged = true;
       menuTimer = 0;
       page++;
-      lcd.clear();
-      if (page > 15) page = 1;
+      //lcd.clear();
+      if (page > 16) {
+        page = 1;
+        lcd.clear();
+      }
     }
   }
 
@@ -17,8 +20,11 @@ void readButtons() {
       dataChanged = true;
       menuTimer = 0;
       page--;
-      lcd.clear();
-      if (page < 1) page = 15;
+      //lcd.clear();
+      if (page < 1) {
+        page = 16;
+        lcd.clear();
+      }
     }
   }
 
@@ -69,7 +75,7 @@ void readButtons() {
         break;
       case 11:
         if (thermostat == true) {
-          thermostat = false; 
+          thermostat = false;
         } else {
           thermostat = true;
         }
@@ -142,17 +148,17 @@ void readButtons() {
         lcdUpd();
         break;
       case 10:
-        if (histeresis > 0) histeresis -= 1; 
-        lcdUpd(); 
+        if (histeresis > 0) histeresis -= 1;
+        lcdUpd();
         break;
       case 11:
         if (thermostat == true) {
-          thermostat = false; 
+          thermostat = false;
         } else {
           thermostat = true;
         }
         lcdUpd();
-        break;   
+        break;
       case 12:
         ////////////EEPROM mentés///////////
         memWrite();
@@ -181,30 +187,34 @@ void readButtons() {
 
 //////////////////////////ÜZEMMÓD VÁLTÁS - BEMENETI JEL//////////////////////////
 void readInput() {
- if (thermostat == false) {         // Bemenet vezérelt üzemmód
-  
+  if (thermostat == false) {         // Bemenet vezérelt üzemmód
+
     if (digitalRead(heatPin) == LOW) {       // Ha alacsony akkor fűtűnk
-    delay(400);
-    if (digitalRead(heatPin) == LOW) {
+      delay(400);
+      if (digitalRead(heatPin) == LOW) {
+        reqHeat = true;
+        digitalWrite(fanPin, LOW);         // Ventillátor bekapcsolása
+      } else {
+        reqHeat = false;
+        digitalWrite(fanPin, HIGH);        // Ventillátor kikapcsolása
+      }
+    }
+  } else if (thermostat == true) {   // Thermostat vezérelt üzemmód
+    //valami
+    if (tempC < setTemp - histeresis && digitalRead(heatPin) == LOW) {
       reqHeat = true;
       digitalWrite(fanPin, LOW);         // Ventillátor bekapcsolása
-    } else {
+    }
+    if (tempC >= setTemp || digitalRead(heatPin) == HIGH) {
       reqHeat = false;
-      digitalWrite(fanPin, HIGH);        // Ventillátor kikapcsolása
+      digitalWrite(fanPin, HIGH);         // Ventillátor kikapcsolása
     }
   }
- } else if (thermostat == true) {   // Thermostat vezérelt üzemmód
-  //valami
-   if (tempC < setTemp - histeresis && digitalRead(heatPin) == LOW) {
-      reqHeat = true;
-      digitalWrite(fanPin, LOW);         // Ventillátor bekapcsolása
-    } 
-   if (tempC >= setTemp || digitalRead(heatPin) == HIGH) {
-      reqHeat = false;
-      digitalWrite(fanPin, HIGH);         // Ventillátor kikapcsolása 
-   }
- }
-
-  
 }
 
+int freeRam () 
+{
+  extern int __heap_start, *__brkval; 
+  int v; 
+  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval); 
+}

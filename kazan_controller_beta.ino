@@ -37,7 +37,7 @@ byte menuTimer = 0;
 byte motorStop = 3;           // Fűtés üzem
 byte motorStart = 4;
 
-byte motorStop2 = 3;          // Tűztartás üzem     
+byte motorStop2 = 3;          // Tűztartás üzem
 byte motorStart2 = 4;
 
 byte motorTest = 2;
@@ -82,9 +82,9 @@ void setup() {
   OffTime = motorStop * egyezer;
 
   lcd.backlight();
-  lcd.print(" Kazan vezerlo ");
+  lcd.print(F(" Kazan vezerlo "));
   lcd.setCursor(0, 1);
-  lcd.print(" Ver: 16.01.01  ");
+  lcd.print(F(" Ver: 16.01.03  "));
 
   pinMode(heatPin, INPUT);
   digitalWrite(heatPin, HIGH);
@@ -102,16 +102,17 @@ void setup() {
   delay(1000);
 
   lcd.clear();
-
-  lcd.print("   MOTOR TESZT  ");
+  
+  lcd.print(F("   MOTOR TESZT  "));
   digitalWrite(motorPin, LOW);
   delay(motorTest * 1000);
   digitalWrite(motorPin, HIGH);
   lcd.setCursor(0, 1);
-  lcd.print("    TESZT OK    ");
+  lcd.print(F("    TESZT OK    "));
   delay(500);
   lcd.clear();
-  Serial.println("Program indul..");
+
+  Serial.println(F("Program indul.."));
 
   memRead();                    //Változók beolvasása EEPROM-ból
 }
@@ -130,25 +131,26 @@ void loop() {
     if (menuTimer >= 20) {
       page = 1;
       menuTimer = 0;
+      lcd.clear();
     }
 
     if (serDebug == true) debug();                                         // Soros port hibakeresés
-    
+
     ///////////////////////SZÍVVERÉS/////////////////////////////////////////////
     if (ledState == HIGH) {
       ledState = LOW;
       digitalWrite(ledPin, HIGH);
       lcd.setCursor(0, 0);
-      if (page==1) {
-      lcd.print("*");
+      if (page == 1) {
+        lcd.print("* ");
       }
       sensors.requestTemperatures();
     } else {
       ledState = HIGH;
       digitalWrite(ledPin, LOW);
       lcd.setCursor(0, 0);
-      if (page==1) {
-      lcd.print(" ");
+      if (page == 1) {
+        lcd.print("  ");
       }
       tempC = sensors.getTempCByIndex(0);
     }
