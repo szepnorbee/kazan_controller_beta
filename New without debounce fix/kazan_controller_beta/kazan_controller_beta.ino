@@ -9,7 +9,7 @@
 
 LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27 for a 16 chars and 2 line display APA
 
-#define ONE_WIRE_BUS 2
+#define ONE_WIRE_BUS 6
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
@@ -131,7 +131,7 @@ void loop() {
       menuTimer = 0;
     }
 
-    //debug();                                         // Soros port hibakeresés
+    debug();                                         // Soros port hibakeresés
     
     ///////////////////////SZÍVVERÉS/////////////////////////////////////////////
     if (ledState == HIGH) {

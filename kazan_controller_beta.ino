@@ -6,20 +6,12 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <EEPROM.h>
-#include <Bounce2.h>
 
-LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27 for a 16 chars and 2 line display APA
 
-#define ONE_WIRE_BUS 2
+#define ONE_WIRE_BUS 6
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
-
-Bounce debouncerB = Bounce();
-Bounce debouncerF = Bounce();
-Bounce debouncerL = Bounce();
-Bounce debouncerJ = Bounce();
-
-Bounce debouncerH = Bounce();
 
 const int heatPin = 10;
 const int fanPin = 11;
@@ -35,7 +27,7 @@ const int le = 4;
 const int jobb = 5;
 
 const int buttonDebounce = 100;   //perges mentesites értékek
-const int arrowDebounce = 250;   //perges mentesites nyilak
+const int arrowDebounce = 350;   //perges mentesites nyilak
 
 //Menü oldal valtozok///////////
 byte page = 1;
@@ -45,10 +37,10 @@ byte menuTimer = 0;
 byte motorStop = 3;           // Fűtés üzem
 byte motorStart = 4;
 
-byte motorStop2 = 3;          // Tűztartás üzem
+byte motorStop2 = 3;          // Tűztartás üzem     
 byte motorStart2 = 4;
 
-byte motorTest = 1;
+byte motorTest = 2;
 byte fanDelay = 10;
 boolean manual = false;
 boolean bLight = true;
@@ -89,29 +81,20 @@ void setup() {
   OffTime = motorStop * egyezer;
 
   lcd.backlight();
-  lcd.print(" Kazan vezerlo  ");
+  lcd.print(" Kazan vezerlo ");
   lcd.setCursor(0, 1);
-  lcd.print(" Ver: 16.01.02  ");
+  lcd.print(" Ver: 16.01.01  ");
 
-  pinMode(heatPin, INPUT_PULLUP);
-  debouncerH.attach(heatPin);
-  debouncerH.interval(buttonDebounce); // interval in ms
+  pinMode(heatPin, INPUT);
+  digitalWrite(heatPin, HIGH);
 
   pinMode(fanPin, OUTPUT);
   pinMode(ledPin, OUTPUT);
   pinMode(motorPin, OUTPUT);
   pinMode(bal, INPUT);
-  debouncerB.attach(bal);
-  debouncerB.interval(arrowDebounce); // interval in ms
   pinMode(fel, INPUT);
-  debouncerF.attach(fel);
-  debouncerF.interval(buttonDebounce); // interval in ms
   pinMode(le, INPUT);
-  debouncerL.attach(le);
-  debouncerL.interval(buttonDebounce); // interval in ms
   pinMode(jobb, INPUT);
-  debouncerJ.attach(jobb);
-  debouncerJ.interval(arrowDebounce); // interval in ms
 
   digitalWrite(fanPin, fanState);
   digitalWrite(motorPin, motorState);
@@ -134,11 +117,6 @@ void setup() {
 
 void loop() {
 
-  debouncerB.update();
-  debouncerF.update();
-  debouncerL.update();
-  debouncerJ.update();
-  debouncerH.update();
   ///////////////////////////////// KIJELZŐ FRISSÍTÉS /////////////////////////////////
   unsigned long mostaniMillis = millis();
 
@@ -153,23 +131,23 @@ void loop() {
       menuTimer = 0;
     }
 
-    //debug();                                         // Soros port hibakeresés
-
+    debug();                                         // Soros port hibakeresés
+    
     ///////////////////////SZÍVVERÉS/////////////////////////////////////////////
     if (ledState == HIGH) {
       ledState = LOW;
       digitalWrite(ledPin, HIGH);
       lcd.setCursor(0, 0);
-      if (page == 1) {
-        lcd.print("*");
+      if (page==1) {
+      lcd.print("*");
       }
       sensors.requestTemperatures();
     } else {
       ledState = HIGH;
       digitalWrite(ledPin, LOW);
       lcd.setCursor(0, 0);
-      if (page == 1) {
-        lcd.print(" ");
+      if (page==1) {
+      lcd.print(" ");
       }
       tempC = sensors.getTempCByIndex(0);
     }

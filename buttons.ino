@@ -1,28 +1,29 @@
 void readButtons() {
 
-  int valB = debouncerB.read();
-  int valF = debouncerF.read();
-  int valL = debouncerL.read();
-  int valJ = debouncerJ.read();
-
-  if (valB == LOW) {
-    dataChanged = true;
-    menuTimer = 0;
-    lcd.clear();
-    if (page < 14) page++;
+  if (digitalRead(bal) == HIGH) {
+    delay(arrowDebounce);
+    if (digitalRead(bal) == HIGH) {
+      dataChanged = true;
+      menuTimer = 0;
+      lcd.clear();
+      if (page < 14) page++;
+    }
   }
 
-  if (valJ == LOW) {
-    dataChanged = true;
-    menuTimer = 0;
-    lcd.clear();
-    if (page > 1) page -= 1;
+  if (digitalRead(jobb) == HIGH) {
+    delay(arrowDebounce);
+    if (digitalRead(jobb) == HIGH) {
+      dataChanged = true;
+      menuTimer = 0;
+      lcd.clear();
+      if (page > 1) page -= 1;
+    }
   }
 
-
-  if (valF == LOW) {
+  if (digitalRead(fel) == HIGH) {
     menuTimer = 0;
     dataChanged = true;
+    delay(buttonDebounce);
     switch (page) {
       case 2:
         motorStart++;
@@ -66,7 +67,7 @@ void readButtons() {
         break;
       case 11:
         if (thermostat == true) {
-          thermostat = false;
+          thermostat = false; 
         } else {
           thermostat = true;
         }
@@ -90,9 +91,10 @@ void readButtons() {
     }
   }
 
-  if (valL == LOW) {
+  if (digitalRead(le) == HIGH) {
     menuTimer = 0;
     dataChanged = true;
+    delay(buttonDebounce);
     switch (page) {
       case 2:
         motorStart--;
@@ -131,17 +133,17 @@ void readButtons() {
         lcdUpd();
         break;
       case 10:
-        if (histeresis > 0) histeresis -= 1;
-        lcdUpd();
+        if (histeresis > 0) histeresis -= 1; 
+        lcdUpd(); 
         break;
       case 11:
         if (thermostat == true) {
-          thermostat = false;
+          thermostat = false; 
         } else {
           thermostat = true;
         }
         lcdUpd();
-        break;
+        break;   
       case 12:
         ////////////EEPROM mentés///////////
         memWrite();
@@ -163,28 +165,30 @@ void readButtons() {
 
 //////////////////////////ÜZEMMÓD VÁLTÁS - BEMENETI JEL//////////////////////////
 void readInput() {
-  int valH = debouncerH.read();
-
-  if (thermostat == false) {         // Bemenet vezérelt üzemmód
-
-    if (valH == LOW) {                   // Ha alacsony akkor fűtűnk
+ if (thermostat == false) {         // Bemenet vezérelt üzemmód
+  
+    if (digitalRead(heatPin) == LOW) {       // Ha alacsony akkor fűtűnk
+    delay(400);
+    if (digitalRead(heatPin) == LOW) {
       reqHeat = true;
       digitalWrite(fanPin, LOW);         // Ventillátor bekapcsolása
     } else {
       reqHeat = false;
       digitalWrite(fanPin, HIGH);        // Ventillátor kikapcsolása
     }
-
-  } else if (thermostat == true) {   // Thermostat vezérelt üzemmód
-    //valami
-    if (tempC < setTemp - histeresis && valH == LOW) {
+  }
+ } else if (thermostat == true) {   // Thermostat vezérelt üzemmód
+  //valami
+   if (tempC < setTemp - histeresis && digitalRead(heatPin) == LOW) {
       reqHeat = true;
       digitalWrite(fanPin, LOW);         // Ventillátor bekapcsolása
-    }
-    if (tempC >= setTemp || valH == HIGH) {
+    } 
+   if (tempC >= setTemp || digitalRead(heatPin) == HIGH) {
       reqHeat = false;
-      digitalWrite(fanPin, HIGH);         // Ventillátor kikapcsolása
-    }
-  }
+      digitalWrite(fanPin, HIGH);         // Ventillátor kikapcsolása 
+   }
+ }
+
+  
 }
 

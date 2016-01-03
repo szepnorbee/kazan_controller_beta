@@ -5,5 +5,7 @@ void debug() {
       Serial.print("Thermos: ");Serial.println(thermostat); 
       Serial.print("mTimer : ");Serial.println(menuTimer); 
       Serial.print("reqHeat (1-Futes / 0-Tartas : ");Serial.println(reqHeat); 
+      Serial.print("Input pin state : "); Serial.println(digitalRead(heatPin));
+      Serial.println("--------------");
 }
 
