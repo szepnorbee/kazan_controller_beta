@@ -13,6 +13,7 @@ LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27 for a 16 char
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
+/////////////////Pin definition /////////////////////////////
 const int heatPin = 10;
 const int fanPin = 11;
 const int motorPin = 12;
@@ -26,7 +27,7 @@ const int fel = 3;
 const int le = 4;
 const int jobb = 5;
 
-const int buttonDebounce = 100;   //perges mentesites értékek
+const int buttonDebounce = 180;   //perges mentesites értékek
 const int arrowDebounce = 250;   //perges mentesites nyilak
 
 //Menü oldal valtozok///////////
@@ -36,21 +37,18 @@ byte menuTimer = 0;
 //Beállítások változói///////////
 byte motorStop = 3;           // Fűtés üzem
 byte motorStart = 4;
-
 byte motorStop2 = 3;          // Tűztartás üzem
 byte motorStart2 = 4;
-
 byte motorTest = 2;
 byte fanDelay = 10;
 boolean manual = false;
 boolean bLight = true;
-boolean dataChanged = false;
 boolean reqHeat = false;
 boolean serDebug = false;
+
 /////////////// Levegő késleltetés //////////////////////////////
 byte fanTime = 0;
-boolean fanTimeout = true;
-boolean upDated = false;
+
 //////////////// Hőmérséklet szabályozás ////////////////////////
 byte setTemp = 60;
 byte histeresis = 3;
@@ -103,7 +101,7 @@ void setup() {
   memRead();                    //Változók beolvasása EEPROM-ból
 
   lcd.clear();
-  
+
   lcd.print(F("   MOTOR TESZT  "));
   digitalWrite(motorPin, LOW);
   delay(motorTest * 1000);
@@ -125,6 +123,8 @@ void loop() {
 
     elozoMillis = mostaniMillis;
     lcdUpd();                             // Kijelző frissítés másodpercenként
+    sensors.requestTemperatures();        // Hány fok van?
+    tempC = sensors.getTempCByIndex(0);   // Ennyi
 
     if (page != 1 && page != 13) menuTimer++;         // Vissza a főmenübe 20 mp múlva
     if (menuTimer >= 20) {
@@ -140,18 +140,12 @@ void loop() {
       ledState = LOW;
       digitalWrite(ledPin, HIGH);
       lcd.setCursor(0, 0);
-      if (page == 1) {
-        lcd.print("* ");
-      }
-      sensors.requestTemperatures();
+      if (page == 1) lcd.print("* ");
     } else {
       ledState = HIGH;
       digitalWrite(ledPin, LOW);
       lcd.setCursor(0, 0);
-      if (page == 1) {
-        lcd.print("  ");
-      }
-      tempC = sensors.getTempCByIndex(0);
+      if (page == 1) lcd.print("  ");
     }
   }
 

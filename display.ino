@@ -12,7 +12,12 @@ void lcdUpd() {
     lcd.setCursor(0, 1);
     lcd.print((millis() / 1000) / 60); lcd.print("min");
     lcd.setCursor(10, 1);
-    lcd.print(tempC, 1); lcd.print(" C");   // 'xxxxxxxxxx25.5 C'
+    if (tempC > 0) {               // Hibás hőmérséklet érték
+      lcd.print(tempC, 1);
+    } else {
+      lcd.print(F("ERR ");
+    }
+    lcd.print(" C");   // 'xxxxxxxxxx25.5 C'
 
     if (motorState == LOW) {
       lcd.setCursor(14, 0);
@@ -89,7 +94,7 @@ void lcdUpd() {
     lcd.setCursor(0, 0);
     lcd.print(F("Hiszterezis     "));
     lcd.setCursor(0, 1);
-    lcd.print(histeresis); lcd.print(" C ");
+    lcd.print(histeresis); lcd.print(F(" C             "));
   }
 
   if (page == 11) {
@@ -140,11 +145,11 @@ void lcdUpd() {
 
   if (page == 15) {
     lcd.setCursor(0, 0);
-    lcd.print(F(" Szabad memoria "));
+    lcd.print(F("MEM:")); lcd.print(freeRam()); lcd.print(F(" bytes  "));
     lcd.setCursor(0, 1);
-    lcd.print(freeRam());lcd.print(F(" bytes    "));
+    lcd.print(F("Vin:")); lcd.print(readVcc()); lcd.print(F(" mVolt  "));
   }
-  
+
   if (page == 16) {
     lcd.setCursor(0, 0);
     lcd.print(F("   SW author    "));

@@ -3,7 +3,6 @@ void readButtons() {
   if (digitalRead(bal) == HIGH) {
     delay(arrowDebounce);
     if (digitalRead(bal) == HIGH) {
-      dataChanged = true;
       menuTimer = 0;
       page++;
       //lcd.clear();
@@ -17,7 +16,6 @@ void readButtons() {
   if (digitalRead(jobb) == HIGH) {
     delay(arrowDebounce);
     if (digitalRead(jobb) == HIGH) {
-      dataChanged = true;
       menuTimer = 0;
       page--;
       //lcd.clear();
@@ -30,7 +28,6 @@ void readButtons() {
 
   if (digitalRead(fel) == HIGH) {
     menuTimer = 0;
-    dataChanged = true;
     delay(buttonDebounce);
     switch (page) {
       case 2:
@@ -51,6 +48,7 @@ void readButtons() {
         break;
       case 6:
         motorTest++;
+        if (motorTest > 5) motorTest = 5;
         lcdUpd();
         break;
       case 7:
@@ -108,7 +106,6 @@ void readButtons() {
 
   if (digitalRead(le) == HIGH) {
     menuTimer = 0;
-    dataChanged = true;
     delay(buttonDebounce);
     switch (page) {
       case 2:
@@ -213,9 +210,22 @@ void readInput() {
   }
 }
 
-int freeRam () 
+int freeRam ()                           // Dinamikus memória mérése
 {
-  extern int __heap_start, *__brkval; 
-  int v; 
-  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval); 
+  extern int __heap_start, *__brkval;
+  int v;
+  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
+}
+
+long readVcc() {                         // Tápfeszültség mérése
+  long result;
+  // Read 1.1V reference against AVcc
+  ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
+  delay(2); // Wait for Vref to settle
+  ADCSRA |= _BV(ADSC); // Convert
+  while (bit_is_set(ADCSRA, ADSC));
+  result = ADCL;
+  result |= ADCH << 8;
+  result = 1126400L / result; // Back-calculate AVcc in mV
+  return result;
 }
