@@ -44,7 +44,7 @@ byte fanDelay = 10;
 boolean manual = false;
 boolean bLight = true;
 boolean reqHeat = false;
-boolean serDebug = false;
+boolean serDebug = false;     // DEBUG
 
 /////////////// Levegő késleltetés //////////////////////////////
 byte fanTime = 0;
@@ -54,6 +54,7 @@ byte setTemp = 60;
 byte histeresis = 3;
 float tempC = 0;
 boolean thermostat = true;
+int readError = 0;
 
 //Timer valtozok/////////////////////////////////////////////////
 unsigned long elozoMillis = 0;   // LCD frissites
@@ -122,9 +123,7 @@ void loop() {
   if (mostaniMillis - elozoMillis >= lcdUpdate) {      // LCD frissites
 
     elozoMillis = mostaniMillis;
-    lcdUpd();                             // Kijelző frissítés másodpercenként
-    sensors.requestTemperatures();        // Hány fok van?
-    tempC = sensors.getTempCByIndex(0);   // Ennyi
+    lcdUpd();                                                                    // Kijelző frissítés másodpercenként
 
     if (page != 1 && page != 13) menuTimer++;         // Vissza a főmenübe 20 mp múlva
     if (menuTimer >= 20) {
@@ -140,11 +139,15 @@ void loop() {
       ledState = LOW;
       digitalWrite(ledPin, HIGH);
       lcd.setCursor(0, 0);
+      sensors.setWaitForConversion(false);                                         // makes it async
+      sensors.requestTemperatures();                                               // Hány fok van?
       if (page == 1) lcd.print("* ");
     } else {
       ledState = HIGH;
       digitalWrite(ledPin, LOW);
       lcd.setCursor(0, 0);
+      if (sensors.getTempCByIndex(0) > -100) tempC = sensors.getTempCByIndex(0);   // Kiszűrjük a hibát és feljegyezzük
+      else readError++;
       if (page == 1) lcd.print("  ");
     }
   }

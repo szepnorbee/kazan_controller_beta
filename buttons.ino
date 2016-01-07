@@ -229,3 +229,5 @@ long readVcc() {                         // Tápfeszültség mérése
   result = 1126400L / result; // Back-calculate AVcc in mV
   return result;
 }
+
+

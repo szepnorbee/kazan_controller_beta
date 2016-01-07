@@ -12,11 +12,7 @@ void lcdUpd() {
     lcd.setCursor(0, 1);
     lcd.print((millis() / 1000) / 60); lcd.print("min");
     lcd.setCursor(10, 1);
-    if (tempC > 0) {               // Hibás hőmérséklet érték
-      lcd.print(tempC, 1);
-    } else {
-      lcd.print(F("ERR ");
-    }
+    lcd.print(tempC, 1);
     lcd.print(" C");   // 'xxxxxxxxxx25.5 C'
 
     if (motorState == LOW) {
@@ -145,9 +141,10 @@ void lcdUpd() {
 
   if (page == 15) {
     lcd.setCursor(0, 0);
-    lcd.print(F("MEM:")); lcd.print(freeRam()); lcd.print(F(" bytes  "));
+    lcd.print(F("ReadError:")); lcd.print(readError); lcd.print(F("  "));       // Olvasási hibák
+    //lcd.print(F("MEM:")); lcd.print(freeRam()); lcd.print(F(" bytes  "));     // Szabad memória
     lcd.setCursor(0, 1);
-    lcd.print(F("Vin:")); lcd.print(readVcc()); lcd.print(F(" mVolt  "));
+    lcd.print(F("Vin:")); lcd.print(readVcc()); lcd.print(F(" mVolt  "));       // Tápfeszültség
   }
 
   if (page == 16) {
