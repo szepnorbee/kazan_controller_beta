@@ -7,11 +7,11 @@ Jellemzői:
 - Szeparánt fűtés ill. tűztartás tüzelőanyag ütemvezérlés
 - Behajtó csiga ill. légbefűvó ventillátor különálló vezérlése
 - Nem felejtő memória
+- Digitális hőmérő vezérelt termosztát (DS18B20)
 
 Jövőbeli elképzelések:
 - Karakteres LCD kijelző helyett színes TFT panel
-- Digitális hőmérő vezérelt termosztát
-- Füstőmérséklet beszámítása a vezérlő algoritmusba
+- Füstőmérséklet beszámítása a vezérlő algoritmusba (K Type Thermocouple + MAX31855)
 - Encoder menüvezérlés
 - Tűz begyújtás üzemmód
 - Különböző hibakezelési algoritmusok
