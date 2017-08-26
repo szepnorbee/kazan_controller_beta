@@ -8,4 +8,3 @@ void updVar() {
     OffTime = motorStop2 * hatvanezer;   //ez percben van
   }
 }
-
